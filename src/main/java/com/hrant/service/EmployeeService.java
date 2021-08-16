@@ -21,14 +21,14 @@ public class EmployeeService {
     private final static Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
     private final EmployeeRepository employeeRepository;
-    private final PositionRepository positionRepository;
-    private final DepartmentRepository departmentRepository;
+    private final PositionService positionService;
+    private final DepartmentService departmentService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository, PositionRepository positionRepository, DepartmentRepository departmentRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, PositionService positionService, DepartmentService departmentService) {
         this.employeeRepository = employeeRepository;
-        this.positionRepository = positionRepository;
-        this.departmentRepository = departmentRepository;
+        this.positionService = positionService;
+        this.departmentService = departmentService;
     }
 
     public EmployeeDto addEmployee(EmployeeDto employeeDto) {
@@ -38,6 +38,8 @@ public class EmployeeService {
             System.out.println("The employee " + employeeDto + " is already in the list");
             return new EmployeeDto();
         }
+        employeeDto.setPositionId(positionService.findPositionIdByName(employeeDto.getPositionName()));
+        employeeDto.setDepartmentId(departmentService.findDepartmentIdByName(employeeDto.getDepartmentName()));
         return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
     }
 
@@ -75,8 +77,8 @@ public class EmployeeService {
         List<EmployeeDto> employeesDto = new ArrayList<>();
         for (Employee e : employees) {
             EmployeeDto employeeDto = DtoConverter.employeeToDto(e);
-            PositionDto positionDto = DtoConverter.positionToDto(positionRepository.findById(e.getPositionId()).orElse(DtoConverter.dtoToPosition(new PositionDto())));
-            DepartmentDto departmentDto = DtoConverter.departmentToDto(departmentRepository.findById(e.getDepartmentId()).orElse(DtoConverter.dtoToDepartment(new DepartmentDto())));
+            PositionDto positionDto = positionService.findPositionById(e.getPositionId());
+            DepartmentDto departmentDto = departmentService.findDepartmentById(e.getDepartmentId());
             employeeDto.setPositionName(positionDto.getName());
             employeeDto.setDepartmentName(departmentDto.getName());
             employeesDto.add(employeeDto);
