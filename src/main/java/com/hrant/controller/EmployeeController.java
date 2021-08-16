@@ -1,6 +1,8 @@
 package com.hrant.controller;
 
+import com.hrant.dto.DepartmentDto;
 import com.hrant.dto.EmployeeDto;
+import com.hrant.dto.PositionDto;
 import com.hrant.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/employees")
+@RestController
+@RequestMapping("/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
