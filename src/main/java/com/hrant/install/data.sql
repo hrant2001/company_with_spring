@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS employee (
     fname VARCHAR(50) NOT NULL,
     lname VARCHAR(50) NOT NULL,
     birthday DATE NOT NULL,
-    email VARCHAR(40) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     position_id TINYINT NOT NULL,
     department_id TINYINT NOT NULL,
     enabled BOOLEAN NOT NULL,

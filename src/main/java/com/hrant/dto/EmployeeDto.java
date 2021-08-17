@@ -14,7 +14,7 @@ public class EmployeeDto implements Serializable {
     private int departmentId;
     private String positionName;
     private String departmentName;
-    private boolean enabled;
+    private boolean enabled = true;
 
     public EmployeeDto() {
         fName = "";
@@ -119,13 +119,13 @@ public class EmployeeDto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EmployeeDto employeeDto = (EmployeeDto) o;
-        return fName.equalsIgnoreCase(employeeDto.fName) && lName.equalsIgnoreCase(employeeDto.lName) && birthday.equals(employeeDto.birthday);
+        EmployeeDto that = (EmployeeDto) o;
+        return positionId == that.positionId && departmentId == that.departmentId && fName.equals(that.fName) && lName.equals(that.lName) && birthday.equals(that.birthday) && email.equals(that.email) && positionName.equals(that.positionName) && departmentName.equals(that.departmentName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fName, lName, birthday);
+        return Objects.hash(fName, lName, birthday, email, positionId, departmentId, positionName, departmentName);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Employee implements Serializable {
     private int departmentId;
 
     @Column(name = "enabled", nullable = false)
-    private boolean enabled;
+    private boolean enabled = true;
 
     public Employee() {
     }
@@ -121,12 +121,12 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return fName.equalsIgnoreCase(employee.fName) && lName.equalsIgnoreCase(employee.lName) && birthday.equals(employee.birthday);
+        return positionId == employee.positionId && departmentId == employee.departmentId && fName.equals(employee.fName) && lName.equals(employee.lName) && birthday.equals(employee.birthday) && email.equals(employee.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fName, lName, birthday);
+        return Objects.hash(fName, lName, birthday, email, positionId, departmentId);
     }
 
     @Override

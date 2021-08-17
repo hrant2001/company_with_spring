@@ -4,9 +4,7 @@ import com.hrant.dto.DepartmentDto;
 import com.hrant.dto.EmployeeDto;
 import com.hrant.dto.PositionDto;
 import com.hrant.model.Employee;
-import com.hrant.repository.DepartmentRepository;
 import com.hrant.repository.EmployeeRepository;
-import com.hrant.repository.PositionRepository;
 import com.hrant.util.DtoConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,12 +46,16 @@ public class EmployeeService {
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
-        List<EmployeeDto> employeesDto = getEmployeesDto(employeeRepository.findAll());
-        if (!employeesDto.contains(employeeDto)) {
-            LOGGER.info("The employee " + employeeDto + " is not in the list");
-            System.out.println("The employee " + employeeDto + " is not in the list");
-            return new EmployeeDto();
-        }
+//        List<EmployeeDto> employeesDto = getEmployeesDto(employeeRepository.findAll());
+//        if (!employeesDto.contains(employeeDto)) {
+//            LOGGER.info("The employee " + employeeDto + " is not in the list");
+//            System.out.println("The employee " + employeeDto + " is not in the list");
+//            return new EmployeeDto();
+//        }
+        int posId = positionService.findPositionIdByName(employeeDto.getPositionName());
+        int depId = departmentService.findDepartmentIdByName(employeeDto.getDepartmentName());
+        employeeDto.setPositionId(posId);
+        employeeDto.setDepartmentId(depId);
         return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
     }
 
