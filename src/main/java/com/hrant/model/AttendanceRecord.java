@@ -1,13 +1,26 @@
 package com.hrant.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity(name = "attendance_record")
 public class AttendanceRecord implements Serializable {
+
+    @Id
+    @Column(name = "record_id", nullable = false, updatable = false)
     private int recordId;
+
+    @Column(name = "entrance_time", nullable = false)
     private LocalDateTime entranceTime;
+
+    @Column(name = "exit_time", nullable = false)
     private LocalDateTime exitTime;
+
+    @Column(name = "employee_id", nullable = false)
     private int employeeId;
 
     public AttendanceRecord() {

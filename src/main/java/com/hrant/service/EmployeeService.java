@@ -46,12 +46,6 @@ public class EmployeeService {
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
-//        List<EmployeeDto> employeesDto = getEmployeesDto(employeeRepository.findAll());
-//        if (!employeesDto.contains(employeeDto)) {
-//            LOGGER.info("The employee " + employeeDto + " is not in the list");
-//            System.out.println("The employee " + employeeDto + " is not in the list");
-//            return new EmployeeDto();
-//        }
         int posId = positionService.findPositionIdByName(employeeDto.getPositionName());
         int depId = departmentService.findDepartmentIdByName(employeeDto.getDepartmentName());
         employeeDto.setPositionId(posId);
@@ -72,7 +66,11 @@ public class EmployeeService {
     }
 
     public EmployeeDto findEmployeeById(int id) {
-        return DtoConverter.employeeToDto(employeeRepository.findById(id).orElse(DtoConverter.dtoToEmployee(new EmployeeDto())));
+        EmployeeDto employeeDto = DtoConverter.employeeToDto(employeeRepository.findById(id).orElse((new Employee())));
+        employeeDto.setPositionName(positionService.findPositionById(employeeDto.getPositionId()).getName());
+        employeeDto.setDepartmentName(departmentService.findDepartmentById(employeeDto.getDepartmentId()).getName());
+
+        return employeeDto;
     }
 
     private List<EmployeeDto> getEmployeesDto(List<Employee> employees) {

@@ -13,7 +13,11 @@ import java.util.Arrays;
 public class CompanyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CompanyApplication.class, args);
+        try {
+            SpringApplication.run(CompanyApplication.class, args);
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
     }
 
     @Bean

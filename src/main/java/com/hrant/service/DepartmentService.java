@@ -25,7 +25,7 @@ public class DepartmentService {
     }
 
     public DepartmentDto findDepartmentById(int id) {
-        return DtoConverter.departmentToDto(((departmentRepository.findById(id).orElse(DtoConverter.dtoToDepartment(new DepartmentDto())))));
+        return DtoConverter.departmentToDto(((departmentRepository.findById(id).orElse((new Department())))));
     }
 
     public List<DepartmentDto> findAllDepartments() {

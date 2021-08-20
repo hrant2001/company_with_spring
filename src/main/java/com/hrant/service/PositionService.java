@@ -25,7 +25,7 @@ public class PositionService {
     }
 
     public PositionDto findPositionById(int id) {
-        return DtoConverter.positionToDto((positionRepository.findById(id).orElse(DtoConverter.dtoToPosition(new PositionDto()))));
+        return DtoConverter.positionToDto((positionRepository.findById(id).orElse(new Position())));
     }
 
     public List<PositionDto> findAllPositions() {
