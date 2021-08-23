@@ -19,8 +19,8 @@ public class DtoConverter {
         employeeDto.setLName(employee.getLName());
         employeeDto.setBirthday(employee.getBirthday());
         employeeDto.setEmail(employee.getEmail());
-        employeeDto.setPositionId(employee.getPositionId());
-        employeeDto.setDepartmentId(employee.getDepartmentId());
+        employeeDto.setPosition(positionToDto(employee.getPosition()));
+        employeeDto.setDepartment(departmentToDto(employee.getDepartment()));
         employeeDto.setEnabled(employee.isEnabled());
 
         return employeeDto;
@@ -51,7 +51,7 @@ public class DtoConverter {
         recordDto.setRecordId(record.getRecordId());
         recordDto.setEntranceTime(record.getEntranceTime());
         recordDto.setExitTime(record.getExitTime());
-        recordDto.setEmployeeId(record.getEmployeeId());
+        recordDto.setEmployee(employeeToDto(record.getEmployee()));
 
         return recordDto;
     }
@@ -64,8 +64,8 @@ public class DtoConverter {
         employee.setLName(employeeDto.getLName());
         employee.setBirthday(employeeDto.getBirthday());
         employee.setEmail(employeeDto.getEmail());
-        employee.setPositionId(employeeDto.getPositionId());
-        employee.setDepartmentId(employeeDto.getDepartmentId());
+        employee.setPosition(dtoToPosition(employeeDto.getPosition()));
+        employee.setDepartmentId(dtoToDepartment(employeeDto.getDepartment()));
         employee.setEnabled(employeeDto.isEnabled());
 
         return employee;

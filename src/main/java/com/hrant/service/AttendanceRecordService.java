@@ -18,12 +18,10 @@ public class AttendanceRecordService {
     private final static Logger LOGGER = LoggerFactory.getLogger(AttendanceRecordService.class);
 
     private final AttendanceRecordRepository recordRepository;
-    private final EmployeeService employeeService;
 
     @Autowired
-    public AttendanceRecordService(AttendanceRecordRepository recordRepository, EmployeeService employeeService) {
+    public AttendanceRecordService(AttendanceRecordRepository recordRepository) {
         this.recordRepository = recordRepository;
-        this.employeeService = employeeService;
     }
 
     public List<AttendanceRecordDto> findAllRecords() {
@@ -34,8 +32,7 @@ public class AttendanceRecordService {
         List<AttendanceRecordDto> recordsDto = new ArrayList<>();
         for (AttendanceRecord r : records) {
             AttendanceRecordDto recordDto = DtoConverter.attendanceRecordToDto(r);
-            EmployeeDto employeeDto = employeeService.findEmployeeById(r.getEmployeeId());
-            recordDto.setEmployeeFullName(employeeDto.getFName() + " " + employeeDto.getLName());
+            recordDto.setEmployeeFullName(r.getEmployee().getFName() + " " + r.getEmployee().getLName());
             recordsDto.add(recordDto);
         }
         return recordsDto;

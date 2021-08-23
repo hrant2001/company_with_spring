@@ -1,8 +1,6 @@
 package com.hrant.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,6 +9,7 @@ import java.util.Objects;
 public class Employee implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id", nullable = false, updatable = false)
     private int employeeId;
 
@@ -26,11 +25,13 @@ public class Employee implements Serializable {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "position_id", nullable = false)
-    private int positionId;
+    @ManyToOne
+    @JoinColumn(name = "position_id", nullable = false)
+    private Position position;
 
-    @Column(name = "department_id", nullable = false)
-    private int departmentId;
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled = true;
@@ -44,12 +45,12 @@ public class Employee implements Serializable {
         this.birthday = birthday;
     }
 
-    public Employee(String fName, String lName, LocalDate birthday, int positionId, int departmentId) {
+    public Employee(String fName, String lName, LocalDate birthday, Position position, Department department) {
         this.fName = fName;
         this.lName = lName;
         this.birthday = birthday;
-        this.positionId = positionId;
-        this.departmentId = departmentId;
+        this.position = position;
+        this.department = department;
     }
 
     public int getEmployeeId() {
@@ -84,20 +85,20 @@ public class Employee implements Serializable {
         this.birthday = birthday;
     }
 
-    public int getPositionId() {
-        return positionId;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentId(Department department) {
+        this.department = department;
     }
 
     public String getEmail() {
@@ -121,12 +122,12 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return positionId == employee.positionId && departmentId == employee.departmentId && fName.equals(employee.fName) && lName.equals(employee.lName) && birthday.equals(employee.birthday) && email.equals(employee.email);
+        return position == employee.position && department == employee.department && fName.equals(employee.fName) && lName.equals(employee.lName) && birthday.equals(employee.birthday) && email.equals(employee.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fName, lName, birthday, email, positionId, departmentId);
+        return Objects.hash(fName, lName, birthday, email, position, department);
     }
 
     @Override

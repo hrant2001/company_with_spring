@@ -1,8 +1,6 @@
 package com.hrant.service;
 
-import com.hrant.dto.DepartmentDto;
 import com.hrant.dto.EmployeeDto;
-import com.hrant.dto.PositionDto;
 import com.hrant.model.Employee;
 import com.hrant.repository.EmployeeRepository;
 import com.hrant.util.DtoConverter;
@@ -19,14 +17,10 @@ public class EmployeeService {
     private final static Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
     private final EmployeeRepository employeeRepository;
-    private final PositionService positionService;
-    private final DepartmentService departmentService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository, PositionService positionService, DepartmentService departmentService) {
+    public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
-        this.positionService = positionService;
-        this.departmentService = departmentService;
     }
 
     public EmployeeDto addEmployee(EmployeeDto employeeDto) {
@@ -36,8 +30,6 @@ public class EmployeeService {
             System.out.println("The employee " + employeeDto + " is already in the list");
             return new EmployeeDto();
         }
-        employeeDto.setPositionId(positionService.findPositionIdByName(employeeDto.getPositionName()));
-        employeeDto.setDepartmentId(departmentService.findDepartmentIdByName(employeeDto.getDepartmentName()));
         return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
     }
 
@@ -46,10 +38,6 @@ public class EmployeeService {
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
-        int posId = positionService.findPositionIdByName(employeeDto.getPositionName());
-        int depId = departmentService.findDepartmentIdByName(employeeDto.getDepartmentName());
-        employeeDto.setPositionId(posId);
-        employeeDto.setDepartmentId(depId);
         return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
     }
 
@@ -66,22 +54,13 @@ public class EmployeeService {
     }
 
     public EmployeeDto findEmployeeById(int id) {
-        EmployeeDto employeeDto = DtoConverter.employeeToDto(employeeRepository.findById(id).orElse((new Employee())));
-        employeeDto.setPositionName(positionService.findPositionById(employeeDto.getPositionId()).getName());
-        employeeDto.setDepartmentName(departmentService.findDepartmentById(employeeDto.getDepartmentId()).getName());
-
-        return employeeDto;
+        return DtoConverter.employeeToDto(employeeRepository.findById(id).orElse((new Employee())));
     }
 
     private List<EmployeeDto> getEmployeesDto(List<Employee> employees) {
         List<EmployeeDto> employeesDto = new ArrayList<>();
         for (Employee e : employees) {
-            EmployeeDto employeeDto = DtoConverter.employeeToDto(e);
-            PositionDto positionDto = positionService.findPositionById(e.getPositionId());
-            DepartmentDto departmentDto = departmentService.findDepartmentById(e.getDepartmentId());
-            employeeDto.setPositionName(positionDto.getName());
-            employeeDto.setDepartmentName(departmentDto.getName());
-            employeesDto.add(employeeDto);
+            employeesDto.add(DtoConverter.employeeToDto(e));
         }
         return employeesDto;
     }

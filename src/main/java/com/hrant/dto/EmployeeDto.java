@@ -10,10 +10,8 @@ public class EmployeeDto implements Serializable {
     private String lName;
     private LocalDate birthday;
     private String email;
-    private int positionId;
-    private int departmentId;
-    private String positionName;
-    private String departmentName;
+    private PositionDto position;
+    private DepartmentDto department;
     private boolean enabled = true;
 
     public EmployeeDto() {
@@ -27,12 +25,12 @@ public class EmployeeDto implements Serializable {
         this.birthday = birthday;
     }
 
-    public EmployeeDto(String fName, String lName, LocalDate birthday, int positionId, int departmentId) {
+    public EmployeeDto(String fName, String lName, LocalDate birthday, PositionDto position, DepartmentDto department) {
         this.fName = fName;
         this.lName = lName;
         this.birthday = birthday;
-        this.positionId = positionId;
-        this.departmentId = departmentId;
+        this.position = position;
+        this.department = department;
     }
 
     public int getEmployeeId() {
@@ -75,36 +73,20 @@ public class EmployeeDto implements Serializable {
         this.email = email;
     }
 
-    public int getPositionId() {
-        return positionId;
+    public PositionDto getPosition() {
+        return position;
     }
 
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
+    public void setPosition(PositionDto position) {
+        this.position = position;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public DepartmentDto getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getPositionName() {
-        return positionName;
-    }
-
-    public void setPositionName(String positionName) {
-        this.positionName = positionName;
-    }
-
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setDepartment(DepartmentDto department) {
+        this.department = department;
     }
 
     public boolean isEnabled() {
@@ -120,12 +102,12 @@ public class EmployeeDto implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeDto that = (EmployeeDto) o;
-        return positionId == that.positionId && departmentId == that.departmentId && fName.equals(that.fName) && lName.equals(that.lName) && birthday.equals(that.birthday) && email.equals(that.email) && positionName.equals(that.positionName) && departmentName.equals(that.departmentName);
+        return position == that.position && department == that.department && fName.equals(that.fName) && lName.equals(that.lName) && birthday.equals(that.birthday) && email.equals(that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fName, lName, birthday, email, positionId, departmentId, positionName, departmentName);
+        return Objects.hash(fName, lName, birthday, email, position, department);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.hrant.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,6 +8,7 @@ import java.util.Objects;
 public class Position implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "position_id", nullable = false, updatable = false)
     private int positionId;
 

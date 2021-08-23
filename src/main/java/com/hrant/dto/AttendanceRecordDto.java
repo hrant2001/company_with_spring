@@ -8,17 +8,17 @@ public class AttendanceRecordDto implements Serializable {
     private int recordId;
     private LocalDateTime entranceTime;
     private LocalDateTime exitTime;
-    private int employeeId;
+    private EmployeeDto employee;
     private String employeeFullName;
 
     public AttendanceRecordDto() {
     }
 
-    public AttendanceRecordDto(int recordId, LocalDateTime entranceTime, LocalDateTime exitTime, int employeeId) {
+    public AttendanceRecordDto(int recordId, LocalDateTime entranceTime, LocalDateTime exitTime, EmployeeDto employee) {
         this.recordId = recordId;
         this.entranceTime = entranceTime;
         this.exitTime = exitTime;
-        this.employeeId = employeeId;
+        this.employee = employee;
     }
 
     public int getRecordId() {
@@ -45,12 +45,12 @@ public class AttendanceRecordDto implements Serializable {
         this.exitTime = exitTime;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public EmployeeDto getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(EmployeeDto employee) {
+        this.employee = employee;
     }
 
     public String getEmployeeFullName() {
@@ -63,7 +63,7 @@ public class AttendanceRecordDto implements Serializable {
 
     @Override
     public String toString() {
-        return recordId + " " + entranceTime + " " + exitTime + " " + employeeId;
+        return recordId + " " + entranceTime + " " + exitTime + " " + employee;
     }
 
     @Override

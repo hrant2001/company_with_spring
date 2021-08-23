@@ -1,8 +1,6 @@
 package com.hrant.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -11,6 +9,7 @@ import java.util.Objects;
 public class AttendanceRecord implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id", nullable = false, updatable = false)
     private int recordId;
 
@@ -20,17 +19,18 @@ public class AttendanceRecord implements Serializable {
     @Column(name = "exit_time", nullable = false)
     private LocalDateTime exitTime;
 
-    @Column(name = "employee_id", nullable = false)
-    private int employeeId;
+    @ManyToOne
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
 
     public AttendanceRecord() {
     }
 
-    public AttendanceRecord(int recordId, LocalDateTime entranceTime, LocalDateTime exitTime, int employeeId) {
+    public AttendanceRecord(int recordId, LocalDateTime entranceTime, LocalDateTime exitTime, Employee employee) {
         this.recordId = recordId;
         this.entranceTime = entranceTime;
         this.exitTime = exitTime;
-        this.employeeId = employeeId;
+        this.employee = employee;
     }
 
     public int getRecordId() {
@@ -57,17 +57,17 @@ public class AttendanceRecord implements Serializable {
         this.exitTime = exitTime;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override
     public String toString() {
-        return recordId + " " + entranceTime + " " + exitTime + " " + employeeId;
+        return recordId + " " + entranceTime + " " + exitTime + " " + employee;
     }
 
     @Override
