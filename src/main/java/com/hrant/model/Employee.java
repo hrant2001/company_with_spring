@@ -1,5 +1,7 @@
 package com.hrant.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,6 +12,7 @@ public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @Cascade(value = org.hibernate.annotations.CascadeType.ALL) or DELETE
     @Column(name = "employee_id", nullable = false, updatable = false)
     private int employeeId;
 
@@ -122,7 +125,7 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return position == employee.position && department == employee.department && fName.equals(employee.fName) && lName.equals(employee.lName) && birthday.equals(employee.birthday) && email.equals(employee.email);
+        return position.equals(employee.position) && department.equals(employee.department) && fName.equals(employee.fName) && lName.equals(employee.lName) && birthday.equals(employee.birthday) && email.equals(employee.email);
     }
 
     @Override

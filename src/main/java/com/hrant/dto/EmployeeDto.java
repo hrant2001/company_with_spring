@@ -102,7 +102,7 @@ public class EmployeeDto implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeDto that = (EmployeeDto) o;
-        return position == that.position && department == that.department && fName.equals(that.fName) && lName.equals(that.lName) && birthday.equals(that.birthday) && email.equals(that.email);
+        return position.equals(that.position) && department.equals(that.department) && fName.equals(that.fName) && lName.equals(that.lName) && birthday.equals(that.birthday) && email.equals(that.email);
     }
 
     @Override

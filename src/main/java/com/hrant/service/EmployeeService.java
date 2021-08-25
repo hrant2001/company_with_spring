@@ -38,6 +38,12 @@ public class EmployeeService {
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
+        List<EmployeeDto> employeesDto = getEmployeesDto(employeeRepository.findAll());
+        if (employeesDto.contains(employeeDto)) {
+            LOGGER.info("The employee " + employeeDto + " is already in the list");
+            System.out.println("The employee " + employeeDto + " is already in the list");
+            return new EmployeeDto();
+        }
         return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
     }
 
