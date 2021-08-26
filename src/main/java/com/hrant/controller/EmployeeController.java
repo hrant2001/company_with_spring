@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/employees")
@@ -27,25 +29,51 @@ public class EmployeeController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable int id) {
-        EmployeeDto employeeDto = employeeService.findEmployeeById(id);
-        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+        try {
+            EmployeeDto employeeDto = employeeService.findEmployeeById(id);
+            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/add")
     public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto newEmployeeDto) {
-        EmployeeDto employeeDto = employeeService.addEmployee(newEmployeeDto);
-        return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
+        try {
+            EmployeeDto employeeDto = employeeService.addEmployee(newEmployeeDto);
+            return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto updatedEmployeeDto) {
-        EmployeeDto employeeDto = employeeService.updateEmployee(updatedEmployeeDto);
-        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+        try {
+            EmployeeDto employeeDto = employeeService.updateEmployee(updatedEmployeeDto);
+            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> addEmployee(@PathVariable int id) {
-        employeeService.deleteEmployeeById(id);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try {
+            employeeService.deleteEmployeeById(id);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

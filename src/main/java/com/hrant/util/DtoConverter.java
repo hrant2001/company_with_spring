@@ -12,6 +12,9 @@ import com.hrant.model.Position;
 public class DtoConverter {
 
     public static EmployeeDto employeeToDto(Employee employee) {
+        if (employee == null)
+            return null;
+
         EmployeeDto employeeDto = new EmployeeDto();
 
         employeeDto.setEmployeeId(employee.getEmployeeId());

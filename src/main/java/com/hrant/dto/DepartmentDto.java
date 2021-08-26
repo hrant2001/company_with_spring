@@ -12,11 +12,6 @@ public class DepartmentDto implements Serializable {
         name = "";
     }
 
-    public DepartmentDto(int departmentId, String name) {
-        this.departmentId = departmentId;
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }

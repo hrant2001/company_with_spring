@@ -1,7 +1,5 @@
 package com.hrant.model;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,7 +10,6 @@ public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Cascade(value = org.hibernate.annotations.CascadeType.ALL) or DELETE
     @Column(name = "employee_id", nullable = false, updatable = false)
     private int employeeId;
 
@@ -42,20 +39,9 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(String fName, String lName, LocalDate birthday) {
-        this.fName = fName;
-        this.lName = lName;
-        this.birthday = birthday;
+    public Employee(int employeeId) {
+        this.employeeId = employeeId;
     }
-
-    public Employee(String fName, String lName, LocalDate birthday, Position position, Department department) {
-        this.fName = fName;
-        this.lName = lName;
-        this.birthday = birthday;
-        this.position = position;
-        this.department = department;
-    }
-
     public int getEmployeeId() {
         return employeeId;
     }

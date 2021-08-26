@@ -21,12 +21,6 @@ public class Position implements Serializable {
     public Position() {
     }
 
-    public Position(int positionId, String name, String shortName) {
-        this.positionId = positionId;
-        this.name = name;
-        this.shortName = shortName;
-    }
-
     public int getPositionId() {
         return positionId;
     }

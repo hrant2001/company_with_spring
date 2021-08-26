@@ -18,11 +18,6 @@ public class Department implements Serializable {
     public Department() {
     }
 
-    public Department(int departmentId, String name) {
-        this.departmentId = departmentId;
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }

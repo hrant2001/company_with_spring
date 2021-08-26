@@ -12,12 +12,6 @@ public class PositionDto implements Serializable {
         name = "";
     }
 
-    public PositionDto(int positionId, String name, String shortName) {
-        this.positionId = positionId;
-        this.name = name;
-        this.shortName = shortName;
-    }
-
     public int getPositionId() {
         return positionId;
     }

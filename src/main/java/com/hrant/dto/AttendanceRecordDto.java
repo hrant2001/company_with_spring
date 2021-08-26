@@ -14,13 +14,6 @@ public class AttendanceRecordDto implements Serializable {
     public AttendanceRecordDto() {
     }
 
-    public AttendanceRecordDto(int recordId, LocalDateTime entranceTime, LocalDateTime exitTime, EmployeeDto employee) {
-        this.recordId = recordId;
-        this.entranceTime = entranceTime;
-        this.exitTime = exitTime;
-        this.employee = employee;
-    }
-
     public int getRecordId() {
         return recordId;
     }

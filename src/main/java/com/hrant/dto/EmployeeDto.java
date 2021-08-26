@@ -15,22 +15,10 @@ public class EmployeeDto implements Serializable {
     private boolean enabled = true;
 
     public EmployeeDto() {
-        fName = "";
-        lName = "";
     }
 
-    public EmployeeDto(String fName, String lName, LocalDate birthday) {
-        this.fName = fName;
-        this.lName = lName;
-        this.birthday = birthday;
-    }
-
-    public EmployeeDto(String fName, String lName, LocalDate birthday, PositionDto position, DepartmentDto department) {
-        this.fName = fName;
-        this.lName = lName;
-        this.birthday = birthday;
-        this.position = position;
-        this.department = department;
+    public EmployeeDto(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public int getEmployeeId() {

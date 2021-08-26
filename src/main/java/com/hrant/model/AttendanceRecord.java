@@ -26,13 +26,6 @@ public class AttendanceRecord implements Serializable {
     public AttendanceRecord() {
     }
 
-    public AttendanceRecord(int recordId, LocalDateTime entranceTime, LocalDateTime exitTime, Employee employee) {
-        this.recordId = recordId;
-        this.entranceTime = entranceTime;
-        this.exitTime = exitTime;
-        this.employee = employee;
-    }
-
     public int getRecordId() {
         return recordId;
     }
