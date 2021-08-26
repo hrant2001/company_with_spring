@@ -45,7 +45,7 @@ public class EmployeeService {
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) throws IllegalArgumentException, NoSuchElementException {
-        if (Validation.isNotValclearidEmployeeDto(employeeDto)) {
+        if (Validation.isNotValidEmployeeDto(employeeDto)) {
             LOGGER.info("The employee " + employeeDto + " is not a valid employee");
             throw new IllegalArgumentException();
         }
