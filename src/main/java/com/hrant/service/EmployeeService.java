@@ -32,8 +32,8 @@ public class EmployeeService {
             throw new IllegalArgumentException();
         }
 
-        List<EmployeeDto> employeesDto = getEmployeesDto(employeeRepository.findAll());
-        if (employeesDto.contains(employeeDto)) {
+        List<Employee> employees = employeeRepository.findAll();
+        if (employees.contains(DtoConverter.dtoToEmployee(employeeDto))) {
             LOGGER.info("The employee " + employeeDto + " is already in the list");
             throw new IllegalArgumentException();
         }
@@ -55,6 +55,11 @@ public class EmployeeService {
             LOGGER.info("The employee " + employeeDto + " is not in the list");
             throw new NoSuchElementException();
         } else {
+            List<Employee> employees = employeeRepository.findAll();
+            if (employees.contains(DtoConverter.dtoToEmployee(employeeDto))) {
+                LOGGER.info("The employee " + employeeDto + " is already in the list");
+                throw new IllegalArgumentException();
+            }
             return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
         }
     }
