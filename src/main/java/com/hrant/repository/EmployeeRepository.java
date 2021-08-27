@@ -15,17 +15,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Modifying
     //@Query(value = "update employee set enabled=false where employee_id=:id", nativeQuery = true) //change to hql
-    @Query("update employee set enabled=false where employeeId=:id")
+    @Query("update #{#entityName} set enabled=false where employeeId=:id")
     @Override
     void deleteById(@Param("id") Integer id);
 
     //@Query(value = "select * from employee where enabled=true", nativeQuery = true)
-    @Query(value = "from employee where enabled=true")
+    @Query("from #{#entityName} where enabled=true")
     @Override
     List<Employee> findAll();
 
     //@Query(value = "select * from employee where employee_id=:id and enabled=true", nativeQuery = true)
-    @Query(value = "from employee where employeeId=:id and enabled=true")
+    @Query("from #{#entityName} where employeeId=:id and enabled=true")
     @Override
     Optional<Employee> findById(@Param("id") Integer id);
 }

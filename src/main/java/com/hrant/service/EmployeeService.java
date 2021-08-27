@@ -18,13 +18,12 @@ import java.util.NoSuchElementException;
 public class EmployeeService {
     private final static Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
+    private final EmployeeRepository employeeRepository;
+
     @Autowired
-    private EmployeeRepository employeeRepository;
-
-
-//    public EmployeeService(EmployeeRepository employeeRepository) {
-//        this.employeeRepository = employeeRepository;
-//    }
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public EmployeeDto addEmployee(EmployeeDto employeeDto) throws IllegalArgumentException {
         if (Validation.isNotValidEmployeeDto(employeeDto)) {
