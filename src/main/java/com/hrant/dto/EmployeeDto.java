@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class EmployeeDto implements Serializable {
-    private int employeeId;
+    private Integer employeeId;
     private String fName;
     private String lName;
     private LocalDate birthday;
@@ -17,11 +17,11 @@ public class EmployeeDto implements Serializable {
     public EmployeeDto() {
     }
 
-    public EmployeeDto(int employeeId) {
+    public EmployeeDto(Integer employeeId) {
         this.employeeId = employeeId;
     }
 
-    public int getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 

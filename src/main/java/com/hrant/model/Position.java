@@ -10,7 +10,7 @@ public class Position implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "position_id", nullable = false, updatable = false)
-    private int positionId;
+    private Integer positionId;
 
     @Column(name = "position_name", nullable = false)
     private String name;
@@ -21,11 +21,11 @@ public class Position implements Serializable {
     public Position() {
     }
 
-    public int getPositionId() {
+    public Integer getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(int positionId) {
+    public void setPositionId(Integer positionId) {
         this.positionId = positionId;
     }
 

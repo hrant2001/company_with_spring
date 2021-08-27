@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class PositionDto implements Serializable {
-    private int positionId;
+    private Integer positionId;
     private String name;
     private String shortName;
 
@@ -12,11 +12,11 @@ public class PositionDto implements Serializable {
         name = "";
     }
 
-    public int getPositionId() {
+    public Integer getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(int positionId) {
+    public void setPositionId(Integer positionId) {
         this.positionId = positionId;
     }
 

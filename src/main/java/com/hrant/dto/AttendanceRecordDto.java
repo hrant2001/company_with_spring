@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class AttendanceRecordDto implements Serializable {
-    private int recordId;
+    private Integer recordId;
     private LocalDateTime entranceTime;
     private LocalDateTime exitTime;
     private EmployeeDto employee;
@@ -14,11 +14,11 @@ public class AttendanceRecordDto implements Serializable {
     public AttendanceRecordDto() {
     }
 
-    public int getRecordId() {
+    public Integer getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(int recordId) {
+    public void setRecordId(Integer recordId) {
         this.recordId = recordId;
     }
 

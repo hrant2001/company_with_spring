@@ -8,6 +8,7 @@ import com.hrant.util.Validation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,13 +28,13 @@ public class EmployeeService {
 
     public EmployeeDto addEmployee(EmployeeDto employeeDto) throws IllegalArgumentException {
         if (Validation.isNotValidEmployeeDto(employeeDto)) {
-            LOGGER.info("The employee " + employeeDto + " is not a valid employee");
+            LOGGER.error("The employee " + employeeDto + " is not a valid employee");
             throw new IllegalArgumentException();
         }
 
-        List<Employee> employees = employeeRepository.findAll();
-        if (employees.contains(DtoConverter.dtoToEmployee(employeeDto))) {
-            LOGGER.info("The employee " + employeeDto + " is already in the list");
+        List<Employee> employees = employeeRepository.findAllByFNameAndLNameAndBirthday(employeeDto.getFName(), employeeDto.getFName(), employeeDto.getBirthday()).orElse(null);
+        if (employees != null) {
+            LOGGER.warn("The employee " + employeeDto + " is already in the list");
             throw new IllegalArgumentException();
         }
         return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
@@ -44,21 +45,17 @@ public class EmployeeService {
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) throws IllegalArgumentException, NoSuchElementException {
-        if (Validation.isNotValidEmployeeDto(employeeDto)) {
-            LOGGER.info("The employee " + employeeDto + " is not a valid employee");
+        if (Validation.isNotValidEmployeeDto(employeeDto) && employeeDto.getEmployeeId() == null) {
+            LOGGER.error("The employee " + employeeDto + " is not a valid employee");
             throw new IllegalArgumentException();
         }
 
         Employee employee = employeeRepository.findById(employeeDto.getEmployeeId()).orElse(null);
         if (employee == null) {
-            LOGGER.info("The employee " + employeeDto + " is not in the list");
+            LOGGER.info("The employee " + employeeDto + " was not found");
             throw new NoSuchElementException();
         } else {
-            List<Employee> employees = employeeRepository.findAll();
-            if (employees.contains(DtoConverter.dtoToEmployee(employeeDto))) {
-                LOGGER.info("The employee " + employeeDto + " is already in the list");
-                throw new IllegalArgumentException();
-            }
+
             return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
         }
     }
@@ -66,7 +63,7 @@ public class EmployeeService {
     public void deleteEmployeeById(int id) throws NoSuchElementException {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
-            LOGGER.info("The employee with the id " + id + " is not in the list");
+            LOGGER.warn("The employee with the id " + id + " was not found");
             throw new NoSuchElementException();
         }
         employeeRepository.deleteById(id);
@@ -76,7 +73,7 @@ public class EmployeeService {
     public EmployeeDto findEmployeeById(int id) throws NoSuchElementException {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
-            LOGGER.info("The employee with the id " + id + " is not in the list");
+            LOGGER.warn("The employee with the id " + id + " was not found");
             throw new NoSuchElementException();
         }
         return DtoConverter.employeeToDto(employee);

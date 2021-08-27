@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS attendance_record (
 );
 
 INSERT INTO positions(position_name, position_short_name)
-VALUES ('Intern Java Developer', 'java_int');
+VALUES ('Chief Executive Officer', 'ceo'), ('Human Resource Manager', 'hr_manager'), ('Human Resource', 'hr'), ('Team Lead', 'teamlead'),
+       ('Senior Developer', 'senior'), ('Mid Developer', 'mid'), ('Junior Developer', 'junior'), ('Intern Developer', 'intern');
 
 INSERT INTO department(department_name)
-VALUES ('Development');
+VALUES ('Management'), ('HR'), ('IT');

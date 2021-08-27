@@ -11,7 +11,7 @@ public class AttendanceRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id", nullable = false, updatable = false)
-    private int recordId;
+    private Integer recordId;
 
     @Column(name = "entrance_time", nullable = false)
     private LocalDateTime entranceTime;
@@ -26,11 +26,11 @@ public class AttendanceRecord implements Serializable {
     public AttendanceRecord() {
     }
 
-    public int getRecordId() {
+    public Integer getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(int recordId) {
+    public void setRecordId(Integer recordId) {
         this.recordId = recordId;
     }
 

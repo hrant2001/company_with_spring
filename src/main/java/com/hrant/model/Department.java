@@ -10,7 +10,7 @@ public class Department implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "department_id", nullable = false, updatable = false)
-    private int departmentId;
+    private Integer departmentId;
 
     @Column(name = "department_name", nullable = false)
     private String name;
@@ -26,11 +26,11 @@ public class Department implements Serializable {
         this.name = name;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 

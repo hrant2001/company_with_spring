@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class DepartmentDto implements Serializable {
 
-    private int departmentId;
+    private Integer departmentId;
     private String name;
 
     public DepartmentDto() {
@@ -20,11 +20,11 @@ public class DepartmentDto implements Serializable {
         this.name = name;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 

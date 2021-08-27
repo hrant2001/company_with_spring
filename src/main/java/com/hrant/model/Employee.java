@@ -11,7 +11,7 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id", nullable = false, updatable = false)
-    private int employeeId;
+    private Integer employeeId;
 
     @Column(name = "fname", nullable = false)
     private String fName;
@@ -39,10 +39,10 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(int employeeId) {
+    public Employee(Integer employeeId) {
         this.employeeId = employeeId;
     }
-    public int getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
