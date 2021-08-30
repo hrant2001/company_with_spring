@@ -17,8 +17,10 @@ public class EmployeeDto implements Serializable {
     public EmployeeDto() {
     }
 
-    public EmployeeDto(Integer employeeId) {
-        this.employeeId = employeeId;
+    public EmployeeDto(String fName, String lName, LocalDate birthday) {
+        this.fName = fName;
+        this.lName = lName;
+        this.birthday = birthday;
     }
 
     public Integer getEmployeeId() {

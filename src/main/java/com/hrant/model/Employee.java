@@ -39,9 +39,12 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(Integer employeeId) {
-        this.employeeId = employeeId;
+    public Employee(String fName, String lName, LocalDate birthday) {
+        this.fName = fName;
+        this.lName = lName;
+        this.birthday = birthday;
     }
+
     public Integer getEmployeeId() {
         return employeeId;
     }

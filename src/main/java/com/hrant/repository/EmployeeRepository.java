@@ -27,6 +27,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Override
     Optional<Employee> findById(@Param("id") Integer id);
 
-    @Query("from #{#entityName} where fname=:fname and lname=:lname and birthday=:birthday and enabled=true")
-    Optional<List<Employee>> findAllByFNameAndLNameAndBirthday(String fname, String lname, LocalDate birthday);
+    @Query("from #{#entityName} where fname=:#{#employee.getFName()} and lname=:#{#employee.getLName()} and birthday=:#{#employee.getBirthday()} and enabled=true")
+    Optional<List<Employee>> findAllByCriteria(Employee employee);
 }

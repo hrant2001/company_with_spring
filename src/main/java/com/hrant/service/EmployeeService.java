@@ -8,7 +8,6 @@ import com.hrant.util.Validation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,14 +26,14 @@ public class EmployeeService {
     }
 
     public EmployeeDto addEmployee(EmployeeDto employeeDto) throws IllegalArgumentException {
-        if (Validation.isNotValidEmployeeDto(employeeDto)) {
+        if (!Validation.isValid(employeeDto)) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
             throw new IllegalArgumentException();
         }
 
-        List<Employee> employees = employeeRepository.findAllByFNameAndLNameAndBirthday(employeeDto.getFName(), employeeDto.getFName(), employeeDto.getBirthday()).orElse(null);
-        if (employees != null) {
-            LOGGER.warn("The employee " + employeeDto + " is already in the list");
+        List<Employee> employees = employeeRepository.findAllByCriteria(new Employee(employeeDto.getFName(), employeeDto.getFName(), employeeDto.getBirthday())).orElse(null);
+        if (employees != null && !employees.isEmpty()) {
+            LOGGER.warn("The employee " + employeeDto + " exists");
             throw new IllegalArgumentException();
         }
         return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
@@ -45,7 +44,7 @@ public class EmployeeService {
     }
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) throws IllegalArgumentException, NoSuchElementException {
-        if (Validation.isNotValidEmployeeDto(employeeDto) && employeeDto.getEmployeeId() == null) {
+        if (!Validation.isValid(employeeDto) || employeeDto.getEmployeeId() == null) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
             throw new IllegalArgumentException();
         }
