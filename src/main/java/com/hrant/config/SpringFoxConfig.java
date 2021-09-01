@@ -1,4 +1,4 @@
-package com.hrant.docs;
+package com.hrant.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

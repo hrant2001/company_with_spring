@@ -3,7 +3,7 @@ package com.hrant.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class DepartmentDto implements Serializable {
+public class DepartmentDto implements DtoMarker, Serializable {
 
     private Integer departmentId;
     private String name;

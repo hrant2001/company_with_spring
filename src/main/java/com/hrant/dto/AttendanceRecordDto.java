@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class AttendanceRecordDto implements Serializable {
+public class AttendanceRecordDto implements DtoMarker, Serializable {
     private Integer recordId;
     private LocalDateTime entranceTime;
     private LocalDateTime exitTime;

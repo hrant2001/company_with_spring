@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name = "attendance_record")
-public class AttendanceRecord implements Serializable {
+public class AttendanceRecord implements EntityMarker, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

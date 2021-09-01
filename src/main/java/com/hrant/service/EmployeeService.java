@@ -3,8 +3,8 @@ package com.hrant.service;
 import com.hrant.dto.EmployeeDto;
 import com.hrant.model.Employee;
 import com.hrant.repository.EmployeeRepository;
-import com.hrant.util.DtoConverter;
 import com.hrant.util.Validation;
+import com.hrant.util.mapper.EmployeeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,12 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
+    private final EmployeeMapper employeeMapper;
+
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
         this.employeeRepository = employeeRepository;
+        this.employeeMapper = employeeMapper;
     }
 
     public EmployeeDto addEmployee(EmployeeDto employeeDto) throws IllegalArgumentException {
@@ -36,7 +39,7 @@ public class EmployeeService {
             LOGGER.warn("The employee " + employeeDto + " exists");
             throw new IllegalArgumentException();
         }
-        return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
+        return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
     }
 
     public List<EmployeeDto> findAllEmployees() {
@@ -55,7 +58,7 @@ public class EmployeeService {
             throw new NoSuchElementException();
         } else {
 
-            return DtoConverter.employeeToDto(employeeRepository.save(DtoConverter.dtoToEmployee(employeeDto)));
+            return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
         }
     }
 
@@ -75,13 +78,13 @@ public class EmployeeService {
             LOGGER.warn("The employee with the id " + id + " was not found");
             throw new NoSuchElementException();
         }
-        return DtoConverter.employeeToDto(employee);
+        return employeeMapper.toDto(employee);
     }
 
     private List<EmployeeDto> getEmployeesDto(List<Employee> employees) {
         List<EmployeeDto> employeesDto = new ArrayList<>();
         for (Employee e : employees) {
-            employeesDto.add(DtoConverter.employeeToDto(e));
+            employeesDto.add(employeeMapper.toDto(e));
         }
         return employeesDto;
     }

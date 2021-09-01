@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class EmployeeDto implements Serializable {
+public class EmployeeDto implements DtoMarker, Serializable {
     private Integer employeeId;
     private String fName;
     private String lName;

@@ -1,10 +1,9 @@
 package com.hrant.service;
 
 import com.hrant.dto.AttendanceRecordDto;
-import com.hrant.dto.EmployeeDto;
 import com.hrant.model.AttendanceRecord;
 import com.hrant.repository.AttendanceRecordRepository;
-import com.hrant.util.DtoConverter;
+import com.hrant.util.mapper.AttendanceRecordMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,12 @@ public class AttendanceRecordService {
 
     private final AttendanceRecordRepository recordRepository;
 
+    private final AttendanceRecordMapper recordMapper;
+
     @Autowired
-    public AttendanceRecordService(AttendanceRecordRepository recordRepository) {
+    public AttendanceRecordService(AttendanceRecordRepository recordRepository, AttendanceRecordMapper recordMapper) {
         this.recordRepository = recordRepository;
+        this.recordMapper = recordMapper;
     }
 
     public List<AttendanceRecordDto> findAllRecords() {
@@ -31,7 +33,7 @@ public class AttendanceRecordService {
     private List<AttendanceRecordDto> getRecordsDto(List<AttendanceRecord> records) {
         List<AttendanceRecordDto> recordsDto = new ArrayList<>();
         for (AttendanceRecord r : records) {
-            AttendanceRecordDto recordDto = DtoConverter.attendanceRecordToDto(r);
+            AttendanceRecordDto recordDto = recordMapper.toDto(r);
             recordDto.setEmployeeFullName(r.getEmployee().getFName() + " " + r.getEmployee().getLName());
             recordsDto.add(recordDto);
         }

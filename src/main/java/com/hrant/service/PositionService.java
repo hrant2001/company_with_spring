@@ -3,7 +3,7 @@ package com.hrant.service;
 import com.hrant.dto.PositionDto;
 import com.hrant.model.Position;
 import com.hrant.repository.PositionRepository;
-import com.hrant.util.DtoConverter;
+import com.hrant.util.mapper.PositionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,16 @@ public class PositionService {
 
     private final PositionRepository positionRepository;
 
+    private final PositionMapper positionMapper;
+
     @Autowired
-    public PositionService(PositionRepository positionRepository) {
+    public PositionService(PositionRepository positionRepository, PositionMapper positionMapper) {
         this.positionRepository = positionRepository;
+        this.positionMapper = positionMapper;
     }
 
     public PositionDto findPositionById(int id) {
-        return DtoConverter.positionToDto((positionRepository.findById(id).orElse(new Position())));
+        return positionMapper.toDto((positionRepository.findById(id).orElse(new Position())));
     }
 
     public List<PositionDto> findAllPositions() {
@@ -33,7 +36,7 @@ public class PositionService {
         List<Position> positions = positionRepository.findAll();
 
         for (Position p : positions) {
-            PositionDto positionDto = DtoConverter.positionToDto(p);
+            PositionDto positionDto = positionMapper.toDto(p);
             positionsDto.add(positionDto);
         }
 

@@ -3,7 +3,7 @@ package com.hrant.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PositionDto implements Serializable {
+public class PositionDto implements DtoMarker, Serializable {
     private Integer positionId;
     private String name;
     private String shortName;

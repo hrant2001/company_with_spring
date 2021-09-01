@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(name = "department")
-public class Department implements Serializable {
+public class Department implements EntityMarker, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

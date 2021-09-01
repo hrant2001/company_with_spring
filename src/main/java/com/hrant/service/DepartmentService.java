@@ -3,7 +3,7 @@ package com.hrant.service;
 import com.hrant.dto.DepartmentDto;
 import com.hrant.model.Department;
 import com.hrant.repository.DepartmentRepository;
-import com.hrant.util.DtoConverter;
+import com.hrant.util.mapper.DepartmentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,16 @@ public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
 
+    private final DepartmentMapper departmentMapper;
+
     @Autowired
-    public DepartmentService(DepartmentRepository departmentRepository) {
+    public DepartmentService(DepartmentRepository departmentRepository, DepartmentMapper departmentMapper) {
         this.departmentRepository = departmentRepository;
+        this.departmentMapper = departmentMapper;
     }
 
     public DepartmentDto findDepartmentById(int id) {
-        return DtoConverter.departmentToDto(((departmentRepository.findById(id).orElse((new Department())))));
+        return departmentMapper.toDto(((departmentRepository.findById(id).orElse((new Department())))));
     }
 
     public List<DepartmentDto> findAllDepartments() {
@@ -33,7 +36,7 @@ public class DepartmentService {
         List<Department> departments = departmentRepository.findAll();
 
         for (Department d : departments) {
-            DepartmentDto departmentDto = DtoConverter.departmentToDto((d));
+            DepartmentDto departmentDto = departmentMapper.toDto((d));
             departmentsDto.add(departmentDto);
         }
 
