@@ -2,7 +2,6 @@ package com.hrant.util.mapper;
 
 import com.hrant.dto.DtoMarker;
 import com.hrant.model.EntityMarker;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,27 +33,4 @@ public abstract class AbstractMapper<E extends EntityMarker, D extends DtoMarker
                 ? null
                 : mapper.map(entity, dtoClass);
     }
-
-//    Converter<E, D> toDtoConverter() {
-//        return context -> {
-//            E source = context.getSource();
-//            D destination = context.getDestination();
-//            mapSpecificFields(source, destination);
-//            return context.getDestination();
-//        };
-//    }
-//
-//
-//    Converter<D, E> toEntityConverter() {
-//        return context -> {
-//            D source = context.getSource();
-//            E destination = context.getDestination();
-//            mapSpecificFields(source, destination);
-//            return context.getDestination();
-//        };
-//    }
-//
-//    abstract void mapSpecificFields(E source, D destination);
-//
-//    abstract void mapSpecificFields(D source, E destination);
 }
