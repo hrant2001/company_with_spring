@@ -9,8 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AttendanceRecordService {
@@ -28,6 +31,31 @@ public class AttendanceRecordService {
 
     public List<AttendanceRecordDto> findAllRecords() {
         return getRecordsDto(recordRepository.findAll());
+    }
+
+    public List<AttendanceRecordDto> findAllRecordsByCriteria(String from, String to, String empOrDep, boolean isEmp) {
+         return getRecordsDto(recordRepository.findAll());
+//        AttendanceRecord record = new AttendanceRecord();
+//        if (from.equals("null") || from.isEmpty()) {
+//            record.setEntranceTime(LocalDateTime.MIN);
+//        } else {
+//            record.setEntranceTime(LocalDate.parse(from).atStartOfDay());
+//        }
+//
+//        if (to.equals("null") || to.isEmpty()) {
+//            record.setExitTime(LocalDateTime.MAX);
+//        } else {
+//            record.setEntranceTime(LocalDate.parse(to).atStartOfDay());
+//        }
+//
+//        if (isEmp) {
+//            record.getEmployee().setFName(empOrDep);
+//            record.getEmployee().getDepartment().setName(""); //maybe error
+//        } else {
+//            record.getEmployee().setFName("");
+//            record.getEmployee().getDepartment().setName(empOrDep); //maybe error
+//        }
+//        return getRecordsDto(Objects.requireNonNull(recordRepository.findAllByCriteria(record).orElse(null))); //change
     }
 
     private List<AttendanceRecordDto> getRecordsDto(List<AttendanceRecord> records) {
