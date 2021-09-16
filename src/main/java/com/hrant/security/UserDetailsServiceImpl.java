@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         try {
             User user = userRepository.findByUsername(userName).orElseThrow(() ->
                     new UsernameNotFoundException("User doesn't exists"));
-            return new UserDetailsImpl(user);
+            return JwtUserFactory.create(user);
         } catch (UsernameNotFoundException e) {
             LOGGER.error(e.getMessage());
             throw e;

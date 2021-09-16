@@ -36,9 +36,17 @@ CREATE TABLE IF NOT EXISTS user (
      username VARCHAR(45) PRIMARY KEY,
      password VARCHAR(200) NOT NULL,
      employee_id INT NOT NULL,
-     role TINYINT NOT NULL,
-     FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
+     role_id TINYINT NOT NULL,
+     FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+     FOREIGN KEY (role_id) REFERENCES role(role_id)
 );
+
+CREATE TABLE IF NOT EXISTS role(
+    role_id TINYINT primary key auto_increment,
+    role_name varchar(11)
+);
+
+INSERT INTO role(role_name) VALUES('ROLE_ADMIN'),('ROLE_USER');
 
 INSERT INTO positions(position_name, position_short_name)
 VALUES ('Chief Executive Officer', 'ceo'), ('Human Resource Manager', 'hr_manager'), ('Human Resource', 'hr'), ('Team Lead', 'teamlead'),
@@ -47,4 +55,5 @@ VALUES ('Chief Executive Officer', 'ceo'), ('Human Resource Manager', 'hr_manage
 INSERT INTO department(department_name)
 VALUES ('Management'), ('HR'), ('IT');
 
-INSERT INTO user VALUES ('user1', 'asdasd', 18, 2), ('user2', '1234', 20, 3);
+INSERT INTO user VALUES ('user1', '$2a$12$em1JvaMBjCGNcBRfKIVu1OIk4kaD11rIldkpSjgVhanwqpn3Hl/qa', 18, 1),
+                        ('user2', '$2a$12$YvQ.3gOp30W1mytxwdoMHuXHJKf3uU2J5/WkQ8LGD.F1Kf/phvGF2', 20, 2);

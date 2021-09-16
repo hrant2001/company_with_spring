@@ -16,8 +16,9 @@ public class User implements EntityMarker {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    @Column(nullable = false)
-    private Integer role;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     public String getUsername() {
         return username;
@@ -43,11 +44,11 @@ public class User implements EntityMarker {
         this.employee = employee;
     }
 
-    public Integer getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Integer role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

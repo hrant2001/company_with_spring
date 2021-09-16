@@ -7,22 +7,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
     private String username;
     private String password;
-    private boolean isActive;
-    private List<SimpleGrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
 
 
-    public UserDetailsImpl(User user) {
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.isActive = true;
-        this.authorities = new ArrayList<>();
-        this.authorities.add(new SimpleGrantedAuthority("ADMIN"));
+    public UserDetailsImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     @Override
@@ -42,22 +38,22 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return true;
     }
 
 }
