@@ -25,7 +25,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/employees/**").permitAll()
+                .antMatchers("/employees").permitAll()
+                .antMatchers("/records/**").permitAll()
+                .antMatchers("/departments/**").permitAll()
+                .antMatchers("/positions/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/user/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -40,6 +46,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder() {
+            @Override
+            public boolean matches(CharSequence enteredPassword, String correctPassword) {
+                return correctPassword.equals(enteredPassword.toString());
+            }
+        };
     }
 }
