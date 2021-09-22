@@ -5,6 +5,7 @@ import com.hrant.dto.AuthenticationResponse;
 import com.hrant.model.User;
 import com.hrant.repository.UserRepository;
 import com.hrant.security.JwtTokenProvider;
+import com.hrant.util.mapper.EmployeeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class AuthorizationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
 
         try {
@@ -52,7 +56,7 @@ public class AuthorizationService {
             response.put("username", username);
             response.put("token", token);
 
-            return new AuthenticationResponse(username, token);
+            return new AuthenticationResponse(username, token, employeeMapper.toDto(user.getEmployee()));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }

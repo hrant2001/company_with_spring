@@ -4,10 +4,12 @@ public class AuthenticationResponse {
 
     private String username;
     private String token;
+    private EmployeeDto employeeDto;
 
-    public AuthenticationResponse(String username, String token) {
+    public AuthenticationResponse(String username, String token, EmployeeDto employeeDto) {
         this.username = username;
         this.token = token;
+        this.employeeDto = employeeDto;
     }
 
     public String getUsername() {
@@ -24,5 +26,13 @@ public class AuthenticationResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public EmployeeDto getEmployeeDto() {
+        return employeeDto;
+    }
+
+    public void setEmployeeDto(EmployeeDto employeeDto) {
+        this.employeeDto = employeeDto;
     }
 }
