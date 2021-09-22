@@ -41,7 +41,7 @@ public class PositionDto implements DtoMarker, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PositionDto positionDto = (PositionDto) o;
-        return positionId == positionDto.positionId;
+        return Objects.equals(positionId, positionDto.positionId);
     }
 
     @Override

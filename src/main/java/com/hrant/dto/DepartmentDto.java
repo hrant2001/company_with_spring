@@ -33,7 +33,7 @@ public class DepartmentDto implements DtoMarker, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DepartmentDto that = (DepartmentDto) o;
-        return departmentId == that.departmentId;
+        return Objects.equals(departmentId, that.departmentId);
     }
 
     @Override

@@ -64,7 +64,7 @@ public class AttendanceRecordDto implements DtoMarker, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AttendanceRecordDto that = (AttendanceRecordDto) o;
-        return recordId == that.recordId;
+        return Objects.equals(recordId, that.recordId);
     }
 
     @Override

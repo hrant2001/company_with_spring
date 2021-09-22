@@ -68,7 +68,7 @@ public class AttendanceRecord implements EntityMarker, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AttendanceRecord that = (AttendanceRecord) o;
-        return recordId == that.recordId;
+        return Objects.equals(recordId, that.recordId);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class Department implements EntityMarker, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Department that = (Department) o;
-        return departmentId == that.departmentId;
+        return Objects.equals(departmentId, that.departmentId);
     }
 
     @Override

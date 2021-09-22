@@ -1,8 +1,6 @@
 package com.hrant.service;
 
-import com.hrant.dto.EmployeeDto;
 import com.hrant.dto.UserDto;
-import com.hrant.model.Employee;
 import com.hrant.model.User;
 import com.hrant.repository.RoleRepository;
 import com.hrant.repository.UserRepository;

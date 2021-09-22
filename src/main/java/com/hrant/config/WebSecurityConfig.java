@@ -32,14 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.cors().and()
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers("/employees/**").hasRole("ADMIN")
+                .antMatchers("/employees/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/positions/**").hasRole("ADMIN")
                 .antMatchers("/departments/**").hasRole("ADMIN")
                 .antMatchers("/records/**").hasRole("ADMIN")

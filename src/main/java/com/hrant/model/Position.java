@@ -50,7 +50,7 @@ public class Position implements EntityMarker, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return positionId == position.positionId;
+        return Objects.equals(positionId, position.positionId);
     }
 
     @Override

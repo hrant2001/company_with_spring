@@ -35,8 +35,3 @@ public class JwtTokenFilter extends GenericFilterBean {
     }
 
 }
-//    @Override
-//    protected boolean shouldNotFilter(HttpServletRequest request) {
-//        return request.getRequestURI().startsWith("/user");
-//    }
-//    //return "/auth/login".equals(request.getRequestURI())
