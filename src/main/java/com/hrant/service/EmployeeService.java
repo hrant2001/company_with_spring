@@ -46,6 +46,15 @@ public class EmployeeService {
         return getEmployeesDto(employeeRepository.findAll());
     }
 
+    public EmployeeDto findEmployeeById(int id) throws NoSuchElementException {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (employee == null) {
+            LOGGER.warn("The employee with the id " + id + " was not found");
+            throw new NoSuchElementException();
+        }
+        return employeeMapper.toDto(employee);
+    }
+
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) throws IllegalArgumentException, NoSuchElementException {
         if (!Validation.isValid(employeeDto) || employeeDto.getEmployeeId() == null) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
@@ -70,15 +79,6 @@ public class EmployeeService {
         }
         employeeRepository.deleteById(id);
         LOGGER.info("The employee with the id " + id + " is successfully deleted from the list");
-    }
-
-    public EmployeeDto findEmployeeById(int id) throws NoSuchElementException {
-        Employee employee = employeeRepository.findById(id).orElse(null);
-        if (employee == null) {
-            LOGGER.warn("The employee with the id " + id + " was not found");
-            throw new NoSuchElementException();
-        }
-        return employeeMapper.toDto(employee);
     }
 
     private List<EmployeeDto> getEmployeesDto(List<Employee> employees) {

@@ -13,11 +13,6 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    @Modifying
-    @Query("update #{#entityName} set enabled=false where employeeId=:id")
-    @Override
-    void deleteById(@Param("id") Integer id);
-
     @Query("from #{#entityName} where enabled=true")
     @Override
     List<Employee> findAll();
@@ -28,4 +23,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query("from #{#entityName} where fname=:#{#employee.getFName()} and lname=:#{#employee.getLName()} and birthday=:#{#employee.getBirthday()} and enabled=true")
     Optional<List<Employee>> findAllByCriteria(Employee employee);
+
+    @Modifying
+    @Query("update #{#entityName} set enabled=false where employeeId=:id")
+    @Override
+    void deleteById(@Param("id") Integer id);
 }

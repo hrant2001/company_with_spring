@@ -20,6 +20,18 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto newEmployeeDto) {
+        try {
+            EmployeeDto employeeDto = employeeService.addEmployee(newEmployeeDto);
+            return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         List<EmployeeDto> employeesDto = employeeService.findAllEmployees();
@@ -38,18 +50,6 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto newEmployeeDto) {
-        try {
-            EmployeeDto employeeDto = employeeService.addEmployee(newEmployeeDto);
-            return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto updatedEmployeeDto) {
         try {
@@ -57,7 +57,7 @@ public class EmployeeController {
             return new ResponseEntity<>(employeeDto, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -65,7 +65,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> addEmployee(@PathVariable int id) {
+    public ResponseEntity<?> deleteEmployee(@PathVariable int id) {
         try {
             employeeService.deleteEmployeeById(id);
             return new ResponseEntity<>(HttpStatus.CREATED);
