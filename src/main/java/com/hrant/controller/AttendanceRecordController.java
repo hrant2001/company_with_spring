@@ -28,7 +28,6 @@ public class AttendanceRecordController {
 
     @GetMapping("/find-by-criteria")
     public ResponseEntity<List<AttendanceRecordDto>> getRecordsByCriteria(@RequestParam(value = "is_employee", required = false) boolean isEmployee, @RequestParam(value = "criteria", required = false) String criteria, @RequestParam(value = "date", required = false) String date) {
-        System.out.println(isEmployee + " " + criteria + " " + date + " in controller");
         List<AttendanceRecordDto> filteredByDepartmentEmployees = recordService.findRecordsByCriteria(isEmployee, criteria, date);
         return new ResponseEntity<>(filteredByDepartmentEmployees, HttpStatus.OK);
     }

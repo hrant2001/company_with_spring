@@ -3,13 +3,14 @@ package com.hrant.service;
 import com.hrant.dto.AttendanceRecordDto;
 import com.hrant.model.AttendanceRecord;
 import com.hrant.repository.AttendanceRecordRepository;
+import com.hrant.specification.AttendanceRecordSpecification;
 import com.hrant.util.mapper.AttendanceRecordMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class AttendanceRecordService {
             criteria = "";
         if (date == null)
             date = "";
-        return getRecordsDto(recordRepository.findByCriteria(isEmployee, criteria, date));
+        // return getRecordsDto(recordRepository.findByCriteria(isEmployee, criteria, date));
+        return getRecordsDto(recordRepository.findAll(Specification.where(AttendanceRecordSpecification.containsFullNameOrDepartment(criteria, isEmployee)
+                .and(AttendanceRecordSpecification.containsEntranceTime(date)))));
     }
 
     private List<AttendanceRecordDto> getRecordsDto(List<AttendanceRecord> records) {

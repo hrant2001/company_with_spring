@@ -3,7 +3,6 @@ package com.hrant.repository;
 import com.hrant.model.AttendanceRecord;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
