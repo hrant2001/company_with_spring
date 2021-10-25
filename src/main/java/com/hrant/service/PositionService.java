@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class PositionService {
@@ -27,10 +26,6 @@ public class PositionService {
         this.positionMapper = positionMapper;
     }
 
-    public PositionDto findPositionById(int id) {
-        return positionMapper.toDto((positionRepository.findById(id).orElse(new Position())));
-    }
-
     public List<PositionDto> findAllPositions() {
         List<PositionDto> positionsDto = new ArrayList<>();
         List<Position> positions = positionRepository.findAll();
@@ -41,10 +36,5 @@ public class PositionService {
         }
 
         return positionsDto;
-    }
-
-    public int findPositionIdByName(String name) {
-        PositionDto positionDto = findAllPositions().stream().filter(p -> p.getName().equalsIgnoreCase(name)).findAny().orElse(null);
-        return Objects.nonNull(positionDto) ? positionDto.getPositionId() : -1;
     }
 }

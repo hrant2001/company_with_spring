@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class DepartmentService {
@@ -27,10 +26,6 @@ public class DepartmentService {
         this.departmentMapper = departmentMapper;
     }
 
-    public DepartmentDto findDepartmentById(int id) {
-        return departmentMapper.toDto(((departmentRepository.findById(id).orElse((new Department())))));
-    }
-
     public List<DepartmentDto> findAllDepartments() {
         List<DepartmentDto> departmentsDto = new ArrayList<>();
         List<Department> departments = departmentRepository.findAll();
@@ -41,10 +36,5 @@ public class DepartmentService {
         }
 
         return departmentsDto;
-    }
-
-    public int findDepartmentIdByName(String name) {
-        DepartmentDto departmentDto = findAllDepartments().stream().filter(p -> p.getName().equalsIgnoreCase(name)).findAny().orElse(null);
-        return Objects.nonNull(departmentDto) ? departmentDto.getDepartmentId() : -1;
     }
 }
