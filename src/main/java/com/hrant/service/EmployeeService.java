@@ -13,11 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class EmployeeService {
     private final static Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
@@ -31,6 +33,7 @@ public class EmployeeService {
         this.employeeMapper = employeeMapper;
     }
 
+    @Transactional
     public EmployeeDto addEmployee(EmployeeDto employeeDto) {
         if (!Validation.isValid(employeeDto)) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
@@ -62,6 +65,7 @@ public class EmployeeService {
         return employeeMapper.toDto(employee);
     }
 
+    @Transactional
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
         if (!Validation.isValid(employeeDto) || employeeDto.getEmployeeId() == null || employeeDto.getEmployeeId() <= 0) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
@@ -78,6 +82,7 @@ public class EmployeeService {
         }
     }
 
+    @Transactional
     public void deleteEmployeeById(Integer id) {
         if (id == null || id <= 0) {
             LOGGER.warn("Id " + id + " is not valid");
