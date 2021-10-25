@@ -22,14 +22,8 @@ public class EmployeeController {
 
     @PostMapping("/add")
     public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto newEmployeeDto) {
-        try {
-            EmployeeDto employeeDto = employeeService.addEmployee(newEmployeeDto);
-            return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        EmployeeDto employeeDto = employeeService.addEmployee(newEmployeeDto);
+        return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -40,39 +34,19 @@ public class EmployeeController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable int id) {
-        try {
-            EmployeeDto employeeDto = employeeService.findEmployeeById(id);
-            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        EmployeeDto employeeDto = employeeService.findEmployeeById(id);
+        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto updatedEmployeeDto) {
-        try {
-            EmployeeDto employeeDto = employeeService.updateEmployee(updatedEmployeeDto);
-            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        EmployeeDto employeeDto = employeeService.updateEmployee(updatedEmployeeDto);
+        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable int id) {
-        try {
-            employeeService.deleteEmployeeById(id);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        employeeService.deleteEmployeeById(id);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

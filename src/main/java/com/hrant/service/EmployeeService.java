@@ -4,6 +4,9 @@ import com.hrant.dto.EmployeeDto;
 import com.hrant.model.Employee;
 import com.hrant.repository.EmployeeRepository;
 import com.hrant.util.Validation;
+import com.hrant.util.exception.employee.EmployeeAlreadyExistsException;
+import com.hrant.util.exception.employee.EmployeeNotFoundException;
+import com.hrant.util.exception.employee.EmployeeNotValidException;
 import com.hrant.util.mapper.EmployeeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,18 +31,18 @@ public class EmployeeService {
         this.employeeMapper = employeeMapper;
     }
 
-    public EmployeeDto addEmployee(EmployeeDto employeeDto) throws IllegalArgumentException {
+    public EmployeeDto addEmployee(EmployeeDto employeeDto) {
         if (!Validation.isValid(employeeDto)) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
-            throw new IllegalArgumentException();
+            throw new EmployeeNotValidException();
         }
 
-        List<Employee> employees = employeeRepository.findAllByCriteria(new Employee(employeeDto.getFName(), employeeDto.getFName(), employeeDto.getBirthday())).orElse(null);
-        if (employees != null && !employees.isEmpty()) {
-            LOGGER.warn("The employee " + employeeDto + " exists");
-            throw new IllegalArgumentException();
+        List<Employee> employees = employeeRepository.findAllByCriteria(new Employee(employeeDto.getFName(), employeeDto.getLName(), employeeDto.getBirthday())).orElse(null);
+        if (employees == null || employees.isEmpty()) {
+            return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
         }
-        return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
+        LOGGER.warn("The employee " + employeeDto + " exists");
+        throw new EmployeeAlreadyExistsException();
     }
 
     public List<EmployeeDto> findAllEmployees() {
@@ -50,7 +53,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             LOGGER.warn("The employee with the id " + id + " was not found");
-            throw new NoSuchElementException();
+            throw new EmployeeNotFoundException();
         }
         return employeeMapper.toDto(employee);
     }
@@ -58,13 +61,13 @@ public class EmployeeService {
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) throws IllegalArgumentException, NoSuchElementException {
         if (!Validation.isValid(employeeDto) || employeeDto.getEmployeeId() == null) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
-            throw new IllegalArgumentException();
+            throw new EmployeeNotValidException();
         }
 
         Employee employee = employeeRepository.findById(employeeDto.getEmployeeId()).orElse(null);
         if (employee == null) {
             LOGGER.info("The employee " + employeeDto + " was not found");
-            throw new NoSuchElementException();
+            throw new EmployeeNotFoundException();
         } else {
 
             return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
@@ -75,7 +78,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             LOGGER.warn("The employee with the id " + id + " was not found");
-            throw new NoSuchElementException();
+            throw new EmployeeNotFoundException();
         }
         employeeRepository.deleteById(id);
         LOGGER.info("The employee with the id " + id + " is successfully deleted from the list");
