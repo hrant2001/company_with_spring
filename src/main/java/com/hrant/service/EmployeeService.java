@@ -5,6 +5,7 @@ import com.hrant.model.Employee;
 import com.hrant.repository.EmployeeRepository;
 import com.hrant.util.Validation;
 import com.hrant.util.exception.employee.EmployeeAlreadyExistsException;
+import com.hrant.util.exception.employee.EmployeeIdNotValidException;
 import com.hrant.util.exception.employee.EmployeeNotFoundException;
 import com.hrant.util.exception.employee.EmployeeNotValidException;
 import com.hrant.util.mapper.EmployeeMapper;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class EmployeeService {
@@ -49,7 +49,11 @@ public class EmployeeService {
         return getEmployeesDto(employeeRepository.findAll());
     }
 
-    public EmployeeDto findEmployeeById(Integer id) throws NoSuchElementException {
+    public EmployeeDto findEmployeeById(Integer id) {
+        if (id == null || id <= 0) {
+            LOGGER.warn("Id " + id + " is not valid");
+            throw new EmployeeIdNotValidException();
+        }
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             LOGGER.warn("The employee with the id " + id + " was not found");
@@ -58,8 +62,8 @@ public class EmployeeService {
         return employeeMapper.toDto(employee);
     }
 
-    public EmployeeDto updateEmployee(EmployeeDto employeeDto) throws IllegalArgumentException, NoSuchElementException {
-        if (!Validation.isValid(employeeDto) || employeeDto.getEmployeeId() == null) {
+    public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
+        if (!Validation.isValid(employeeDto) || employeeDto.getEmployeeId() == null || employeeDto.getEmployeeId() <= 0) {
             LOGGER.error("The employee " + employeeDto + " is not a valid employee");
             throw new EmployeeNotValidException();
         }
@@ -74,7 +78,11 @@ public class EmployeeService {
         }
     }
 
-    public void deleteEmployeeById(Integer id) throws NoSuchElementException {
+    public void deleteEmployeeById(Integer id) {
+        if (id == null || id <= 0) {
+            LOGGER.warn("Id " + id + " is not valid");
+            throw new EmployeeIdNotValidException();
+        }
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             LOGGER.warn("The employee with the id " + id + " was not found");

@@ -1,6 +1,7 @@
 package com.hrant.util.exception.advisor;
 
 import com.hrant.util.exception.employee.EmployeeAlreadyExistsException;
+import com.hrant.util.exception.employee.EmployeeIdNotValidException;
 import com.hrant.util.exception.employee.EmployeeNotFoundException;
 import com.hrant.util.exception.employee.EmployeeNotValidException;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class EmployeeControllerAdvisor {
     }
 
     @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<Object> handleUserNotFoundException(EmployeeNotFoundException ex, WebRequest request) {
+    public ResponseEntity<Object> handleEmployeeNotFoundException(EmployeeNotFoundException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -40,13 +41,25 @@ public class EmployeeControllerAdvisor {
     }
 
     @ExceptionHandler(EmployeeNotValidException.class)
-    public ResponseEntity<Object> handleInvalidUserException(EmployeeNotValidException ex, WebRequest request) {
+    public ResponseEntity<Object> handleEmployeeNotValidException(EmployeeNotValidException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         body.put("message", "Employee not valid");
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmployeeIdNotValidException.class)
+    public ResponseEntity<Object> handleEmployeeIdNotValidException(EmployeeIdNotValidException ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
+        body.put("message", "Employee id not valid");
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
