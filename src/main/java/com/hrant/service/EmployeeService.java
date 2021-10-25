@@ -49,7 +49,7 @@ public class EmployeeService {
         return getEmployeesDto(employeeRepository.findAll());
     }
 
-    public EmployeeDto findEmployeeById(int id) throws NoSuchElementException {
+    public EmployeeDto findEmployeeById(Integer id) throws NoSuchElementException {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             LOGGER.warn("The employee with the id " + id + " was not found");
@@ -74,7 +74,7 @@ public class EmployeeService {
         }
     }
 
-    public void deleteEmployeeById(int id) throws NoSuchElementException {
+    public void deleteEmployeeById(Integer id) throws NoSuchElementException {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             LOGGER.warn("The employee with the id " + id + " was not found");
