@@ -1,4 +1,4 @@
-package com.hrant.util.exception;
+package com.hrant.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

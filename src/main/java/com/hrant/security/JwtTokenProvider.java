@@ -2,7 +2,7 @@ package com.hrant.security;
 
 import com.hrant.model.Role;
 import io.jsonwebtoken.*;
-import com.hrant.util.exception.JwtAuthenticationException;
+import com.hrant.exception.JwtAuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

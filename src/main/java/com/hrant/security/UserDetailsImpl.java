@@ -7,8 +7,8 @@ import java.util.Collection;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
 

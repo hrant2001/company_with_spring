@@ -19,7 +19,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto newEmployeeDto) {
         EmployeeDto employeeDto = employeeService.addEmployee(newEmployeeDto);
         return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
@@ -31,19 +31,19 @@ public class EmployeeController {
         return new ResponseEntity<>(employeesDto, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Integer id) {
         EmployeeDto employeeDto = employeeService.findEmployeeById(id);
         return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto updatedEmployeeDto) {
         EmployeeDto employeeDto = employeeService.updateEmployee(updatedEmployeeDto);
         return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Integer id) {
         employeeService.deleteEmployeeById(id);
         return new ResponseEntity<>(HttpStatus.CREATED);
