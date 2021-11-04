@@ -22,17 +22,24 @@ CREATE TABLE IF NOT EXISTS employee
     email         VARCHAR(255) NOT NULL,
     position_id   TINYINT      NOT NULL,
     department_id TINYINT      NOT NULL,
-    enabled       BOOLEAN      NOT NULL,
+    enabled       BOOLEAN      NOT NULL DEFAULT true,
     FOREIGN KEY (position_id) REFERENCES positions (position_id),
     FOREIGN KEY (department_id) REFERENCES department (department_id)
 );
 
 CREATE TABLE IF NOT EXISTS attendance_record
 (
-    record_id   INT PRIMARY KEY AUTO_INCREMENT,
-    exit_time   DATETIME NOT NULL,
-    employee_id INT      NOT NULL,
+    record_id     INT PRIMARY KEY AUTO_INCREMENT,
+    entrance_time DATETIME NOT NULL,
+    exit_time     DATETIME NOT NULL,
+    employee_id   INT      NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
+);
+
+CREATE TABLE IF NOT EXISTS role
+(
+    role_id   TINYINT primary key auto_increment,
+    role_name varchar(11)
 );
 
 CREATE TABLE IF NOT EXISTS user
@@ -43,10 +50,4 @@ CREATE TABLE IF NOT EXISTS user
     role_id     TINYINT      NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
     FOREIGN KEY (role_id) REFERENCES role (role_id)
-);
-
-CREATE TABLE IF NOT EXISTS role
-(
-    role_id   TINYINT primary key auto_increment,
-    role_name varchar(11)
 );

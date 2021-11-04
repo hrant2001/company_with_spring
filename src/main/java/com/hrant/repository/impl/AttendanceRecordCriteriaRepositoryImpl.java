@@ -1,6 +1,7 @@
-package com.hrant.repository;
+package com.hrant.repository.impl;
 
 import com.hrant.model.AttendanceRecord;
+import com.hrant.repository.AttendanceRecordCriteriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

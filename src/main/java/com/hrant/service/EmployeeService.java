@@ -75,10 +75,14 @@ public class EmployeeService {
         if (employee == null) {
             LOGGER.info("The employee {} was not found", employeeDto);
             throw new NotFoundException("The employee " + employeeDto + " was not found");
-        } else {
-
-            return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
         }
+
+        List<Employee> employees = employeeRepository.findAllByCriteria(new Employee(employeeDto.getFName(), employeeDto.getLName(), employeeDto.getBirthday())).orElse(null);
+        if (employees != null && !employees.isEmpty()) {
+            LOGGER.warn("The employee {} exists", employeeDto);
+            throw new AlreadyExistsException("The employee " + employeeDto + " exists");
+        }
+        return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
     }
 
     @Transactional
